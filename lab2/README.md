@@ -103,7 +103,7 @@ Once this class was written in `Triangle.cpp` I could then reference it
 in the `example1.cpp` by adding an include statement - `#include "Triangle.cpp"`.
 Instantiating an object then became as easy as `Triangle t1(width, height*2, 0, 0, vertexbuffer, colorbuffer);`
 and a method call was `t1.draw();`. However I had first tried to instantiate a 
-`Triangle` the Java way with `Triangle t2 = new (width, height*2, 0, 0, vertexbuffer, colorbuffer);`.
+`Triangle` the Java way with `Triangle t2 = new Triangle(width, height*2, width, 0, vertexbuffer, colorbuffer);`.
 This didn't work the way I expected as the `new` keyword actually returns a pointer, however
 methods for the object can still be accessed via `t2->draw();`
  
