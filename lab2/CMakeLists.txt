@@ -53,7 +53,7 @@ add_definitions(
 set_source_files_properties(${SRC_FILES} PROPERTIES VS_TOOL_OVERRIDE "None")
 
 # Example 1
-add_executable(example1
+add_executable(triangle
 		${SRC_FILES}
 		source/example1/example1.cpp
 		source/example1/Triangle.cpp
@@ -72,20 +72,20 @@ add_executable(example1
 		source/example1/Triangle.cpp source/example1/Triangle.h)
 
 # working directories
-set_target_properties(example1 PROPERTIES COMPILE_DEFINITIONS "USE_ASSIMP")
-target_link_libraries(example1
+set_target_properties(triangle PROPERTIES COMPILE_DEFINITIONS "USE_ASSIMP")
+target_link_libraries(triangle
 		${ALL_LIBS}
 		assimp
 		)
 
-set_target_properties(example1 PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "source/example1/")
+set_target_properties(triangle PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "source/example1/")
 
 #message(${CMAKE_GENERATOR})
 if(NOT ${CMAKE_GENERATOR} STREQUAL "Xcode")
 	add_custom_command(
-			TARGET example1 POST_BUILD
-			COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/example1${CMAKE_EXECUTABLE_SUFFIX}" "../source/example1/"
-			COMMENT "Copying example1 files..."
+			TARGET triangle POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/triangle${CMAKE_EXECUTABLE_SUFFIX}" "../"
+			COMMENT "Copying triangle files..."
 
 	)
 endif()

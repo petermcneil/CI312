@@ -37,6 +37,6 @@ out/
 hw
 
 build/
-/lab2/source/example1/example1
-
+pyramid
+triangle
 __init__.py

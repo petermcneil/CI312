@@ -2,7 +2,6 @@
 cmake_minimum_required (VERSION 3.0)
 project (GLTutorials)
 
-
 find_package(OpenGL REQUIRED)
 
 
@@ -53,13 +52,13 @@ add_definitions(
 set_source_files_properties(${SRC_FILES} PROPERTIES VS_TOOL_OVERRIDE "None")
 
 # Example 1
-add_executable(polygon
+add_executable(pyramid
 	${SRC_FILES}
         src/polygon/polygon.cpp
         src/polygon/Triangle.cpp
         src/polygon/Triangle.h
-        src/polygon/SimpleFragmentShader.hlsl
-        src/polygon/SimpleVertexShader.hlsl
+        ../libraries/SimpleFragmentShader.hlsl
+        ../libraries/SimpleVertexShader.hlsl
         ../libraries/common/objloader.cpp
         ../libraries/common/objloader.hpp
         ../libraries/common/controls.cpp
@@ -72,20 +71,20 @@ add_executable(polygon
         ../libraries/common/vboindexer.hpp)
 
 # working directories
-set_target_properties(polygon PROPERTIES COMPILE_DEFINITIONS "USE_ASSIMP")
-target_link_libraries(polygon
+set_target_properties(pyramid PROPERTIES COMPILE_DEFINITIONS "USE_ASSIMP")
+target_link_libraries(pyramid
 	${ALL_LIBS}
 	assimp
 )
 
-set_target_properties(polygon PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "src/polygon/")
+set_target_properties(pyramid PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "src/polygon/")
 
-#message(${CMAKE_GENERATOR})
+message(${CMAKE_GENERATOR})
 if(NOT ${CMAKE_GENERATOR} STREQUAL "Xcode")
 add_custom_command(
-   TARGET polygon POST_BUILD
-   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/polygon${CMAKE_EXECUTABLE_SUFFIX}" "../src/polygon/"
-    COMMENT "Copying example1 files..."
+   TARGET pyramid POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/pyramid${CMAKE_EXECUTABLE_SUFFIX}" "../"
+    COMMENT "Copying pyramid files..."
 
 )
 endif()

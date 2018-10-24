@@ -6,6 +6,7 @@
 #define GLTUTORIALS_TRIANGLE_H
 
 #include <GL/glew.h>
+
 class Triangle {
 private:
     int width;
@@ -17,7 +18,9 @@ private:
 
 public:
     Triangle(int wid, int hei, int x, int y, GLuint vertex, GLuint color);
+
     void draw();
+
     ~Triangle();
 };
 
