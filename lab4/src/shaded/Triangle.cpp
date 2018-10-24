@@ -1,5 +1,6 @@
 #include "Triangle.h"
 #include <iostream>
+
 using namespace std;
 
 Triangle::Triangle(int wid, int hei, int x, int y, GLuint vertex, GLuint color) {
@@ -28,7 +29,7 @@ void Triangle::draw() {
             GL_FLOAT,           // type
             GL_FALSE,           // normalized?
             0,                  // stride
-            (void*)0            // array buffer offset
+            (void *) 0            // array buffer offset
     );
 
     // 2nd attribute buffer : colors
@@ -40,14 +41,12 @@ void Triangle::draw() {
             GL_FLOAT,           // type
             GL_FALSE,           // normalized?
             0,                  // stride
-            (void*)0            // array buffer offset
+            (void *) 0            // array buffer offset
     );
 
-
-
     // Draw the geometry !
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glDrawArrays(GL_TRIANGLES, 0, 50); // 3 indices starting at 0 -> 1
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);

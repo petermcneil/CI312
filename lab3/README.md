@@ -10,4 +10,13 @@
 
 #### Journey
 
-1.
+1. Understanding geometry in example (triangle.cpp) file
+
+GL_TRIANGLES
+3 vertices
+For mine 1
+
+2. Creating a 3D geometry
+GL_TRIANGLES
+
+
