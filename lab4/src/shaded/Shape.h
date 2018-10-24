@@ -1,7 +1,3 @@
-//
-// Created by Peter McNeil on 13/10/2018.
-//
-
 #ifndef GLTUTORIALS_TRIANGLE_H
 #define GLTUTORIALS_TRIANGLE_H
 
@@ -15,9 +11,10 @@ private:
     int ypos;
     GLuint vertexbuffer;
     GLuint colorbuffer;
+    bool fill;
 
 public:
-    Triangle(int wid, int hei, int x, int y, GLuint vertex, GLuint color);
+    Triangle(int wid, int hei, int x, int y, GLuint vertex, GLuint color, bool fil);
 
     void draw();
 

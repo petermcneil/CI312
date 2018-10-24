@@ -57,8 +57,6 @@ add_executable(triangle
 		${SRC_FILES}
 		source/example1/example1.cpp
 		source/example1/Triangle.cpp
-		source/example1/SimpleFragmentShader.hlsl
-		source/example1/SimpleVertexShader.hlsl
 		../libraries/common/objloader.cpp
 		../libraries/common/objloader.hpp
 		../libraries/common/controls.cpp
@@ -69,7 +67,9 @@ add_executable(triangle
 		../libraries/common/texture.hpp
 		../libraries/common/vboindexer.cpp
 		../libraries/common/vboindexer.hpp
-		source/example1/Triangle.cpp source/example1/Triangle.h)
+		source/example1/Triangle.cpp
+		source/example1/Triangle.h
+)
 
 # working directories
 set_target_properties(triangle PROPERTIES COMPILE_DEFINITIONS "USE_ASSIMP")

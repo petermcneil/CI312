@@ -51,15 +51,21 @@ add_definitions(
 
 set_source_files_properties(${SRC_FILES} PROPERTIES VS_TOOL_OVERRIDE "None")
 
+
+file(GLOB src
+		"src/shapes/*.h"
+		"src/shapes/*.cpp"
+		"src/shapes/*.hpp"
+		"src/shaded/*.h"
+		"src/shaded/*.cpp"
+		"src/shaded/*.hpp"
+		)
+
 # Example 1
 add_executable(pyramid
 	${SRC_FILES}
-        src/shaded/ShadedPolygon.cpp
-        src/shaded/Triangle.cpp
-        src/shaded/Triangle.h
-        ../libraries/SimpleFragmentShader.hlsl
-        ../libraries/SimpleVertexShader.hlsl
-        ../libraries/common/objloader.cpp
+		${src}
+		../libraries/common/objloader.cpp
         ../libraries/common/objloader.hpp
         ../libraries/common/controls.cpp
         ../libraries/common/controls.hpp
@@ -68,7 +74,8 @@ add_executable(pyramid
         ../libraries/common/texture.cpp
         ../libraries/common/texture.hpp
         ../libraries/common/vboindexer.cpp
-        ../libraries/common/vboindexer.hpp)
+        ../libraries/common/vboindexer.hpp
+)
 
 # working directories
 set_target_properties(pyramid PROPERTIES COMPILE_DEFINITIONS "USE_ASSIMP")

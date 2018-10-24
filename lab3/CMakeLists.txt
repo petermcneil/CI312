@@ -55,10 +55,8 @@ set_source_files_properties(${SRC_FILES} PROPERTIES VS_TOOL_OVERRIDE "None")
 add_executable(pyramid
 	${SRC_FILES}
         src/polygon/polygon.cpp
-        src/polygon/Triangle.cpp
-        src/polygon/Triangle.h
-        ../libraries/SimpleFragmentShader.hlsl
-        ../libraries/SimpleVertexShader.hlsl
+		src/polygon/Triangle.cpp
+		src/polygon/Triangle.h
         ../libraries/common/objloader.cpp
         ../libraries/common/objloader.hpp
         ../libraries/common/controls.cpp

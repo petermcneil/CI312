@@ -134,8 +134,8 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
 
-    GLuint programID = LoadShaders("/Users/mcneip01/uni/CI312/libraries/CameraVertexShader.hlsl",
-                                   "/Users/mcneip01/uni/CI312/libraries/SimpleFragmentShader.hlsl");
+    GLuint programID = LoadShaders("/Users/mcneip01/uni/CI312/libraries/shaders/CameraVertexShader.glsl",
+                                   "/Users/mcneip01/uni/CI312/libraries/shaders/SimpleFragmentShader.glsl");
 
     Triangle t1(width, height * 2, 0, 0, vertexbuffer, colorbuffer);
     auto *t2 = new Triangle(width, height * 2, width, 0, vertexbuffer, colorbuffer);

@@ -1,15 +1,16 @@
-#include "Triangle.h"
+#include "shaded/Shape.h"
 #include <iostream>
 
 using namespace std;
 
-Triangle::Triangle(int wid, int hei, int x, int y, GLuint vertex, GLuint color) {
+Triangle::Triangle(int wid, int hei, int x, int y, GLuint vertex, GLuint color, bool fil) {
     width = wid;
     height = hei;
     xpos = x;
     ypos = y;
     vertexbuffer = vertex;
     colorbuffer = color;
+    fill = fil;
 }
 
 Triangle::~Triangle() {
@@ -45,9 +46,12 @@ void Triangle::draw() {
     );
 
     // Draw the geometry !
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    if (!fill){
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
     glDrawArrays(GL_TRIANGLES, 0, 50); // 3 indices starting at 0 -> 1
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
 }
+
