@@ -21,7 +21,7 @@ using namespace glm;
 #include "../../common/objloader.hpp"
 #include "../../common/vboindexer.hpp"
 #include "../../common/controls.hpp"
-#include "Triangle.h"
+#include "Viewer.h"
 #include <glm/gtx/transform.hpp>
 
 
@@ -94,7 +94,7 @@ int main() {
     GLfloat h = ((sqrt(6) * s) / 3);
 
     static const GLfloat g_vertex_buffer_data[] = {
-            //Base Triangle
+            //Base Viewer
             z, z, z,
             s, z, z,
             s / 2, h, z,
@@ -137,8 +137,8 @@ int main() {
     GLuint programID = LoadShaders("/Users/mcneip01/uni/CI312/libraries/CameraVertexShader.hlsl",
                                    "/Users/mcneip01/uni/CI312/libraries/SimpleFragmentShader.hlsl");
 
-    Triangle t1(width, height * 2, 0, 0, vertexbuffer, colorbuffer);
-    auto *t2 = new Triangle(width, height * 2, width, 0, vertexbuffer, colorbuffer);
+    Viewer* t1 = new Triangle(width, height * 2, 0, 0, vertexbuffer, colorbuffer);
+    Viewer* t2 = new Triangle(width, height * 2, width, 0, vertexbuffer, colorbuffer);
     auto MatrixID = static_cast<GLuint>(glGetUniformLocation(programID, "MVP"));
 
     do {
@@ -169,7 +169,7 @@ int main() {
         glm::mat4 mvp = Projection * View * Model; // Remember, matrix multiplication is the other way around
         glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
-        t1.draw();
+        t1->draw();
         t2->draw();
 
         // Swap buffers

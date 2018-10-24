@@ -55,8 +55,9 @@ set_source_files_properties(${SRC_FILES} PROPERTIES VS_TOOL_OVERRIDE "None")
 add_executable(pyramid
 	${SRC_FILES}
         src/polygon/polygon.cpp
-        src/polygon/Triangle.cpp
-        src/polygon/Triangle.h
+		src/polygon/Viewer.cpp
+		src/polygon/Viewer.h
+		src/polygon/Triangle.cpp
         ../libraries/SimpleFragmentShader.hlsl
         ../libraries/SimpleVertexShader.hlsl
         ../libraries/common/objloader.cpp
@@ -68,7 +69,7 @@ add_executable(pyramid
         ../libraries/common/texture.cpp
         ../libraries/common/texture.hpp
         ../libraries/common/vboindexer.cpp
-        ../libraries/common/vboindexer.hpp)
+        ../libraries/common/vboindexer.hpp src/polygon/FileShape.cpp)
 
 # working directories
 set_target_properties(pyramid PROPERTIES COMPILE_DEFINITIONS "USE_ASSIMP")
