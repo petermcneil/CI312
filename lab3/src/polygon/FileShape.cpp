@@ -7,7 +7,7 @@ void FileShape::draw() {
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
 
-    bool res = loadAssImp("/Users/mcneip01/uni/CI312/libraries/assets/sphere.obj", indices, vertices, uvs, normals);
+    bool res = loadAssImp(assetPath, indices, vertices, uvs, normals);
 
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);

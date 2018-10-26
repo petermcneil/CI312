@@ -1,23 +1,23 @@
 # CMake entry point
-cmake_minimum_required (VERSION 3.0)
-project (GLTutorials)
+cmake_minimum_required(VERSION 3.0)
+project(GLTutorials)
 
 find_package(OpenGL REQUIRED)
 
 
-if( CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR )
-    message( FATAL_ERROR "Please select another Build Directory ! (and give it a clever name, like bin_Visual2012_64bits/)" )
-endif()
-if( CMAKE_SOURCE_DIR MATCHES " " )
-	message( "Your Source Directory contains spaces. If you experience problems when compiling, this can be the cause." )
-endif()
-if( CMAKE_BINARY_DIR MATCHES " " )
-	message( "Your Build Directory contains spaces. If you experience problems when compiling, this can be the cause." )
-endif()
+if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
+    message(FATAL_ERROR "Please select another Build Directory ! (and give it a clever name, like bin_Visual2012_64bits/)")
+endif ()
+if (CMAKE_SOURCE_DIR MATCHES " ")
+    message("Your Source Directory contains spaces. If you experience problems when compiling, this can be the cause.")
+endif ()
+if (CMAKE_BINARY_DIR MATCHES " ")
+    message("Your Build Directory contains spaces. If you experience problems when compiling, this can be the cause.")
+endif ()
 
 
 # Compile external dependencies 
-add_subdirectory (../libraries/external external)
+add_subdirectory(../libraries/external external)
 
 # On Visual 2005 and above, this module can set the debug working directory
 cmake_policy(SET CMP0026 OLD)
@@ -34,32 +34,29 @@ include_directories(
 
 
 set(ALL_LIBS
-	${OPENGL_LIBRARY}
-	glfw
-	GLEW_1130
-)
+        ${OPENGL_LIBRARY}
+        glfw
+        GLEW_1130
+        )
 
 add_definitions(
-	-DTW_STATIC
-	-DTW_NO_LIB_PRAGMA
-	-DTW_NO_DIRECT3D
-	-DGLEW_STATIC
-	-D_CRT_SECURE_NO_WARNINGS
+        -DTW_STATIC
+        -DTW_NO_LIB_PRAGMA
+        -DTW_NO_DIRECT3D
+        -DGLEW_STATIC
+        -D_CRT_SECURE_NO_WARNINGS
 )
 
 #FILE(GLOB SRC_FILES "source/*.hlsl")
+
+FILE(GLOB src "src/polygon/*.cpp" "src/polygon/*.h")
 
 set_source_files_properties(${SRC_FILES} PROPERTIES VS_TOOL_OVERRIDE "None")
 
 # Example 1
 add_executable(pyramid
-	${SRC_FILES}
-        src/polygon/polygon.cpp
-		src/polygon/Viewer.cpp
-		src/polygon/Viewer.h
-		src/polygon/Triangle.cpp
-        ../libraries/SimpleFragmentShader.hlsl
-        ../libraries/SimpleVertexShader.hlsl
+        ${SRC_FILES}
+        ${src}
         ../libraries/common/objloader.cpp
         ../libraries/common/objloader.hpp
         ../libraries/common/controls.cpp
@@ -69,30 +66,31 @@ add_executable(pyramid
         ../libraries/common/texture.cpp
         ../libraries/common/texture.hpp
         ../libraries/common/vboindexer.cpp
-        ../libraries/common/vboindexer.hpp src/polygon/FileShape.cpp)
+        ../libraries/common/vboindexer.hpp
+        ../libraries/Paths.h)
 
 # working directories
 set_target_properties(pyramid PROPERTIES COMPILE_DEFINITIONS "USE_ASSIMP")
 target_link_libraries(pyramid
-	${ALL_LIBS}
-	assimp
-)
+        ${ALL_LIBS}
+        assimp
+        )
 
 set_target_properties(pyramid PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "src/polygon/")
 
 message(${CMAKE_GENERATOR})
-if(NOT ${CMAKE_GENERATOR} STREQUAL "Xcode")
-add_custom_command(
-   TARGET pyramid POST_BUILD
-   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/pyramid${CMAKE_EXECUTABLE_SUFFIX}" "../"
-    COMMENT "Copying pyramid files..."
+if (NOT ${CMAKE_GENERATOR} STREQUAL "Xcode")
+    add_custom_command(
+            TARGET pyramid POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/pyramid${CMAKE_EXECUTABLE_SUFFIX}" "../"
+            COMMENT "Copying pyramid files..."
 
-)
-endif()
+    )
+endif ()
 
 
-SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
-SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*hlsl*" )
+SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*")
+SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*hlsl*")
 
 
  
