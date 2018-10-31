@@ -5,7 +5,6 @@
 *.slo
 *.lo
 *.o
-*.obj
 
 # Precompiled Headers
 *.gch
@@ -39,4 +38,7 @@ hw
 build/
 pyramid
 triangle
+helloWorld
 __init__.py
+
+*.bu

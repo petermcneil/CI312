@@ -53,9 +53,6 @@ set_source_files_properties(${SRC_FILES} PROPERTIES VS_TOOL_OVERRIDE "None")
 
 
 file(GLOB src
-		"src/shapes/*.h"
-		"src/shapes/*.cpp"
-		"src/shapes/*.hpp"
 		"src/shaded/*.h"
 		"src/shaded/*.cpp"
 		"src/shaded/*.hpp"
@@ -84,7 +81,7 @@ target_link_libraries(pyramid
 	assimp
 )
 
-set_target_properties(pyramid PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "src/polygon/")
+set_target_properties(pyramid PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "src/shaded/")
 
 message(${CMAKE_GENERATOR})
 if(NOT ${CMAKE_GENERATOR} STREQUAL "Xcode")

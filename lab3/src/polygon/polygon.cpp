@@ -21,11 +21,14 @@ using namespace glm;
 #include "../../common/objloader.hpp"
 #include "../../common/vboindexer.hpp"
 #include "../../common/controls.hpp"
-#include "Triangle.h"
+#include "Viewer.h"
+#include "../../Paths.h"
 #include <glm/gtx/transform.hpp>
 
 
-int main() {
+int main(int argc, char* argv[]) {
+    bool triangle = argc <= 1;
+
     if (!glfwInit()) {
         fprintf(stderr, "Failed to initialize GLFW\n");
         getchar();
@@ -88,13 +91,13 @@ int main() {
     glGenVertexArrays(1, &VertexArrayID);
     glBindVertexArray(VertexArrayID);
 
-    GLfloat s = .25;
+    GLfloat s = 1;
     GLfloat z = 0.0;
     GLfloat H = ((sqrt(3) * s) / 2);
     GLfloat h = ((sqrt(6) * s) / 3);
 
     static const GLfloat g_vertex_buffer_data[] = {
-            //Base Triangle
+            //Base Viewer
             z, z, z,
             s, z, z,
             s / 2, h, z,
@@ -134,12 +137,20 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
 
-    GLuint programID = LoadShaders("/Users/mcneip01/uni/CI312/libraries/shaders/CameraVertexShader.glsl",
-                                   "/Users/mcneip01/uni/CI312/libraries/shaders/SimpleFragmentShader.glsl");
+    GLuint programID = LoadShaders(camera_shader, simple_f_shader);
 
-    Triangle t1(width, height * 2, 0, 0, vertexbuffer, colorbuffer);
-    auto *t2 = new Triangle(width, height * 2, width, 0, vertexbuffer, colorbuffer);
-    auto MatrixID = static_cast<GLuint>(glGetUniformLocation(programID, "MVP"));
+    Viewer* t1;
+    Viewer* t2;
+
+    if(triangle){
+        t1 = new Triangle(width, height * 2, 0, 0, vertexbuffer, colorbuffer);
+        t2 = new Triangle(width, height * 2, width, 0, vertexbuffer, colorbuffer);
+    } else {
+        t1 = new FileShape(width, height * 2, 0, 0, vertexbuffer, colorbuffer, sphere_asset);
+        t2 = new FileShape(width, height * 2, width, 0, vertexbuffer, colorbuffer, sphere_asset);
+    }
+
+    GLint MatrixID = glGetUniformLocation(programID, "MVP");
 
     do {
         // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
@@ -151,9 +162,7 @@ int main() {
         computeMatricesFromInputs(window, width, height);
 
         //********Calculate the MVP matrix
-
         //***********PROJECTION*****************
-
         glm::mat4 Projection = getProjectionMatrix();
         //***********CAMERA*****************
         // Camera matrix
@@ -164,12 +173,11 @@ int main() {
         );
         //***********MODEL*****************
         glm::mat4 Model = glm::mat4(1.0);
-
         // Our ModelViewProjection : multiplication of our 3 matrices
         glm::mat4 mvp = Projection * View * Model; // Remember, matrix multiplication is the other way around
         glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
-        t1.draw();
+        t1->draw();
         t2->draw();
 
         // Swap buffers
