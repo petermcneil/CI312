@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
     glGenVertexArrays(1, &VertexArrayID);
     glBindVertexArray(VertexArrayID);
 
-    GLfloat s = .5;
+    GLfloat s = 1;
     GLfloat z = 0.0;
     GLfloat H = ((sqrt(3) * s) / 2);
     GLfloat h = ((sqrt(6) * s) / 3);
