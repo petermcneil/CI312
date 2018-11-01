@@ -19,6 +19,7 @@ out vData
 // Values that stay constant for the whole mesh.
 uniform mat4 MVP;
 uniform mat4 V;
+uniform mat4 M;
 uniform vec3 LightPosition_worldspace;
 
 void main(){

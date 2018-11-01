@@ -33,7 +33,13 @@ lab4: setup
 	mkdir -p ./lab4/build && \
 	cmake -B./lab4/build -H./lab4/ && \
 	make -C ./lab4/build && \
-	./lab4/pyramid 1
+	./lab4/pyramid
+
+lab5: setup
+	mkdir -p ./lab5/build && \
+	cmake -B./lab5/build -H./lab5/ && \
+	make -C ./lab5/build && \
+	./lab5/pyramid
 
 clean:
 	@rm -rf ./lab2/build/ && rm -rf ./lab3/build/ && rm -rf ./libraries/Paths.h.bu

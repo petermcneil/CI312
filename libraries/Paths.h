@@ -20,6 +20,10 @@ extern char * light_v_shader = libraries_path(const_cast<char *>("libraries/shad
 extern char * light_f_shader = libraries_path(const_cast<char *>("libraries/shaders/LightFragmentShader.glsl"));
 extern char * camera_shader = libraries_path(const_cast<char *>("libraries/shaders/CameraVertexShader.glsl"));
 
+extern char * colour_g_shader = libraries_path(const_cast<char *>("libraries/shaders/ColorsGeometryShader.glsl"));
+extern char * colour_v_shader = libraries_path(const_cast<char *>("libraries/shaders/ColorsVertexShader.glsl"));
+extern char * colour_f_shader = libraries_path(const_cast<char *>("libraries/shaders/ColorsFragmentShader.glsl"));
+
 // Assets
 extern char * sphere_asset = libraries_path(const_cast<char *>("libraries/assets/sphere.obj"));
 
