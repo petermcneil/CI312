@@ -91,25 +91,25 @@ int main(int argc, char* argv[]) {
     glGenVertexArrays(1, &VertexArrayID);
     glBindVertexArray(VertexArrayID);
 
-    GLfloat s = 1;
+    GLfloat s = .7;
     GLfloat z = 0.0;
     GLfloat H = ((sqrt(3) * s) / 2);
     GLfloat h = ((sqrt(6) * s) / 3);
 
     static const GLfloat g_vertex_buffer_data[] = {
-            //Base Viewer
+            //Base Triangle
             z, z, z,
             s, z, z,
             s / 2, h, z,
-            //
+            //Triangle 1
             z, z, z,
             s / 2, h / 3, H,
             s / 2, h, z,
-            //
+            //Triangle 2
             s, z, z,
             s / 2, h / 3, H,
             s / 2, h, z,
-            //
+            //Triangle 3
             z, z, z,
             s / 2, h / 3, H,
             s, z, z,
@@ -167,7 +167,7 @@ int main(int argc, char* argv[]) {
         //***********CAMERA*****************
         // Camera matrix
         glm::mat4 View = glm::lookAt(
-                glm::vec3(0.7, 0.5, 0.5), // Camera is at (0,0,-1), in World Space
+                glm::vec3(s/2, H/3, s*3), // Camera is at (0,0,-1), in World Space
                 glm::vec3(0, 0, 0), // and looks at the origin
                 glm::vec3(0, 1, 0)  // Head is up (set to 0,-1,0 to look upside-down)
         );
