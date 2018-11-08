@@ -185,7 +185,7 @@ int main(int argc, char* argv[]) {
     if (argc > 2 && argc < 4) {
         argument = argv[2];
     } else {
-        argument = "N/A";
+        argument = (char *) "N/A";
     }
 
     if (!glfwInit()) {
@@ -247,7 +247,7 @@ int main(int argc, char* argv[]) {
     glGenVertexArrays(1, &VertexArrayID);
     glBindVertexArray(VertexArrayID);
 
-    GLfloat s = .3;
+    GLfloat s = .5;
     GLfloat z = 0.0;
     GLfloat H = ((sqrt(3) * s) / 2);
     GLfloat h = ((sqrt(6) * s) / 3);
@@ -367,8 +367,6 @@ int main(int argc, char* argv[]) {
 //    programID = shadedCamera();
 ////    programID = loadedObject();
 
-
-
     GLuint programID = LoadShaders(colour_g_shader, colour_v_shader, colour_f_shader);
 
     Triangle t1(width, height * 2, 0, 0, vertexbuffer, colourbuffer, true);
@@ -393,9 +391,9 @@ int main(int argc, char* argv[]) {
         //***********CAMERA*****************
         // Camera matrix
         glm::mat4 View = glm::lookAt(
-                glm::vec3(0, 0.5, 0.5), // Camera is at (0,0,-1), in World Space
-                glm::vec3(0, 0, 0), // and looks at the origin
-                glm::vec3(0, -.5, 0)  // Head is up (set to 0,-1,0 to look upside-down)
+                glm::vec3(s/2, h/3, s*2), // Camera is at (0,0,-1), in World Space
+                glm::vec3(s/2, h/3, s), // and looks at the origin
+                glm::vec3(0, s, 0)  // Head is up (set to 0,-1,0 to look upside-down)
         );
         //***********MODEL*****************
         glm::mat4 Model = glm::mat4(1.0);
@@ -407,7 +405,7 @@ int main(int argc, char* argv[]) {
         glUniformMatrix4fv(ViewID, 1, GL_FALSE, &View[0][0]);
 
         // Camera view
-        glm::vec3 lightPosition(.5, 0, 0);
+        glm::vec3 lightPosition(0, 1, 2);
         glm::vec3 cameraPosition(0, 0, 0);
         glUniform3f(LightID, lightPosition.x, lightPosition.y, lightPosition.z);
         glUniform3f(CameraID, cameraPosition.x, cameraPosition.y, cameraPosition.z);
