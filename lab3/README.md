@@ -81,7 +81,7 @@ To change the camera I edited the values in the camera matrix:
 
 I settled on the above vec as it meant we could see the pyramid head on.
 
-![3D pyramid](./pyramids.png)
+![3D pyramid](./correctPyramid.png)
 
 **5. Load a 3d polygonal mesh from a file**
 
