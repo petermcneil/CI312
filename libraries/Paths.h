@@ -6,7 +6,7 @@
 
 char * libraries_path(char file[]) {
     //Change this to download location
-    char library[] = "/Users/mcneip01/uni/Ci312/";
+    char library[] = "/Users/mcneip01/uni/CI312/";
     auto * path = new char[std::strlen(library)+std::strlen(file)+1];
     std::strcpy(path,library);
     std::strcat(path,file);
