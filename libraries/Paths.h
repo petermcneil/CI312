@@ -6,7 +6,7 @@
 
 char * libraries_path(char file[]) {
     //Change this to download location
-    char library[] = "/Users/mcneip01/uni/CI312/";
+    char library[] = "/Users/mcneip01/uni/Ci312/";
     auto * path = new char[std::strlen(library)+std::strlen(file)+1];
     std::strcpy(path,library);
     std::strcat(path,file);
@@ -22,5 +22,6 @@ char * camera_shader = libraries_path(const_cast<char *>("libraries/shaders/Came
 
 // Assets
 char * sphere_asset = libraries_path(const_cast<char *>("libraries/assets/sphere.obj"));
+char * moving_asset = libraries_path(const_cast<char *>("libraries/assets/movingObject.obj"));
 
 #endif //GLTUTORIALS_PATHS_H

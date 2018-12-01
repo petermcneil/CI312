@@ -15,18 +15,15 @@
 I started by extracting out the functions to display different types of shape/shaded/lighting.
 This was to aid readability inside the class. From here I had a good base to get started calculating the normals.
 
-The normal for a face is necessary to accurately render lighting for it. Since we are only using straight-edged
-polygons the normal will be the same across the whole face, meaning we only have to calculate one normal per face.
-In this case I then have to find the difference between a base vector and two other vectors, then calculate the
-cross product from them. From there we can use the normalise function in OpenGL to find the normal vector for the face.
+Normals are used by lighting shaders and give the shaders the direction a particular point is looking at in relation to the light
+source. To calculate the normals a few calculations had to be made. A base point had to be picked on each triangle - `p0`. 
+Then two vectors were calculated for that triangle - i.e. `p1 - p0`. To have a vector that can be normalised I calculated
+the cross-product between the two vectors. This returns a vector perpendicular to the vectors, which can then be normalised.
+Resulting in the code:
 
-The resulting code looks like:
 ```cpp
-	glm::vec3 base_p0(z, z, z);		//Base vector
-    glm::vec3 base_p1(s / 2, h, z);	//1st vector
-    glm::vec3 base_p2(s, z, z);		//2nd vector
-    glm::vec3 base_norm = glm::normalize(glm::cross(glm::vec3(base_p1 - base_p0),
-                                                    glm::vec3(base_p2 - base_p0)));
+    glm::vec3 t3_norm = glm::normalize(glm::cross(glm::vec3(t3_p1 - t3_p0),
+                                                  glm::vec3(t3_p2 - t3_p0)));
 ```
 
 Following this process for the next three triangles I ended up with a normal buffer array, `normals`,
@@ -36,18 +33,7 @@ Following this process for the next three triangles I ended up with a normal buf
             base_norm.x, base_norm.y, base_norm.z,
             base_norm.x, base_norm.y, base_norm.z,
             base_norm.x, base_norm.y, base_norm.z,
-            // 1
-            t1_norm.x, t1_norm.y, t1_norm.z,
-            t1_norm.x, t1_norm.y, t1_norm.z,
-            t1_norm.x, t1_norm.y, t1_norm.z,
-            // 2
-            t2_norm.x, t2_norm.y, t2_norm.z,
-            t2_norm.x, t2_norm.y, t2_norm.z,
-            t2_norm.x, t2_norm.y, t2_norm.z,
-            // 3
-            t3_norm.x, t3_norm.y, t3_norm.z,
-            t3_norm.x, t3_norm.y, t3_norm.z,
-            t3_norm.x, t3_norm.y, t3_norm.z,
+            ...
     };
 ```
 
@@ -73,8 +59,9 @@ Output:
 
 ---
 #### Conclusion
-
-In this tutorial I was exposed on how lighting can work when rendering objects. I learnt how to effectively
+I found this tutorial useful in giving me an overview on how lighting works in OpenGL and more generally with
+graphics algorithms. I learnt how vectors and normals can be used in conjunction with shaders to produce realistic
+lighting scenes.
 
 ---
 #### Sources
