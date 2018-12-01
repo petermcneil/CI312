@@ -1,19 +1,12 @@
 // Include standard headers
 #include <cstdio>
 #include <cstdlib>
-
 // Include GLEW
 #include <GL/glew.h>
-
 // Include GLFW
 #include <glfw3.h>
-
-GLFWwindow *window;
-
 // Include GLM
 #include <glm/glm.hpp>
-
-using namespace glm;
 
 #include <iostream>
 #include <vector>
@@ -25,168 +18,27 @@ using namespace glm;
 #include "Viewer.h"
 #include "../../Paths.h"
 
+using namespace glm;
+
 // Global variables
+GLFWwindow *window;
+
 int width = 1000;
 int height = 500;
 
 GLuint vertexbuffer;
 GLuint colourbuffer;
+
 GLuint normalbuffer;
+GLfloat s;
+GLfloat z;
+GLfloat H;
+GLfloat h;
+GLuint programID;
+Viewer *t1;
+Viewer *t2;
 
-//GLuint noCamera() {
-//    GLuint programID = LoadShaders(simple_v_shader,
-//                                   simple_f_shader);
-//
-//    Triangle t1(width, height * 2, 0, 0, vertexbuffer, colourbuffer);
-//    Triangle t2(width, height * 2, width, 0, vertexbuffer, colourbuffer);
-//
-//    do {
-//        // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-//        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-//
-//
-//        glUseProgram(programID);
-//        t1.draw();
-//        t2.draw();
-//
-//        // Swap buffers
-//        glfwSwapBuffers(window);
-//        glfwPollEvents();
-//
-//    } // Check if the ESC key was pressed or the window was closed
-//    while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-//           glfwWindowShouldClose(window) == 0);
-//
-//    return programID;
-//}
-//
-
-//GLuint basicCamera() {
-//    GLuint programID = LoadShaders(simple_v_shader,
-//                                   simple_f_shader);
-//
-//    Triangle t1(width, height * 2, 0, 0, vertexbuffer, colourbuffer);
-//    Triangle t2(width, height * 2, width, 0, vertexbuffer, colourbuffer);
-//    GLuint MatrixID(glGetUniformLocation(programID, "MVP"));
-//
-//    do {
-//        // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-//        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-//
-//
-//        glUseProgram(programID);
-//        computeMatricesFromInputs(window, width, height);
-//
-//        //********Calculate the MVP matrix
-//
-//        //***********PROJECTION*****************
-//
-//        glm::mat4 Projection = getProjectionMatrix();
-//        //***********CAMERA*****************
-//        // Camera matrix
-//        glm::mat4 View = glm::lookAt(
-//                glm::vec3(0.7, 0.5, 0.5), // Camera is at (0,0,-1), in World Space
-//                glm::vec3(0, 0, 0), // and looks at the origin
-//                glm::vec3(0, 1, 0)  // Head is up (set to 0,-1,0 to look upside-down)
-//        );
-//        //***********MODEL*****************
-//        glm::mat4 Model = glm::mat4(1.0);
-//
-//        // Our ModelViewProjection : multiplication of our 3 matrices
-//        glm::mat4 mvp = Projection * View * Model; // Remember, matrix multiplication is the other way around
-//        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
-//
-//        t1.draw();
-//        t2.draw();
-//
-//        // Swap buffers
-//        glfwSwapBuffers(window);
-//        glfwPollEvents();
-//
-//    } // Check if the ESC key was pressed or the window was closed
-//    while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-//           glfwWindowShouldClose(window) == 0);
-//
-//    return programID;
-//}
-//
-//GLuint shadedCamera() {
-//    GLuint programID = LoadShaders(light_v_shader,
-//                                   light_f_shader);
-//
-//    Triangle t1(width, height * 2, 0, 0, vertexbuffer, colourbuffer);
-//    Triangle t2(width, height * 2, width, 0, vertexbuffer, colourbuffer);
-//    GLuint MatrixID = glGetUniformLocation(programID, "MVP");
-//    GLuint ViewID = glGetUniformLocation(programID, "V");
-//    GLuint ModelID = glGetUniformLocation(programID, "M");
-//    GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
-//    GLuint CameraID = glGetUniformLocation(programID, "CameraPosition_worldspace");
-//
-//    do {
-//        // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
-//        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-//
-//        glUseProgram(programID);
-//        computeMatricesFromInputs(window, width, height);
-//
-//        //********Calculate the MVP matrix
-//        //***********PROJECTION*****************
-//        glm::mat4 Projection = getProjectionMatrix();
-//        //***********CAMERA*****************
-//        // Camera matrix
-//        glm::mat4 View = glm::lookAt(
-//                glm::vec3(0.7, 0.5, 0.5), // Camera is at (0,0,-1), in World Space
-//                glm::vec3(0, 0, 0), // and looks at the origin
-//                glm::vec3(0, 1, 0)  // Head is up (set to 0,-1,0 to look upside-down)
-//        );
-//        //***********MODEL*****************
-//        glm::mat4 Model = glm::mat4(1.0);
-//
-//        // Our ModelViewProjection : multiplication of our 3 matrices
-//        glm::mat4 mvp = Projection * View * Model; // Remember, matrix multiplication is the other way around
-//        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
-//        glUniformMatrix4fv(ModelID, 1, GL_FALSE, &View[0][0]);
-//        glUniformMatrix4fv(ViewID, 1, GL_FALSE, &View[0][0]);
-//
-//        // Camera view
-//        glm::vec3 lightPosition(.5, 0, 0);
-//        glm::vec3 cameraPosition(.5, .5, .5);
-//        glUniform3f(LightID, lightPosition.x, lightPosition.y, lightPosition.z);
-//        glUniform3f(CameraID, cameraPosition.x, cameraPosition.y, cameraPosition.z);
-//
-//        // Lighting
-//        glEnableVertexAttribArray(2);
-//        glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
-//        glVertexAttribPointer(
-//                2,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-//                3,                  // size
-//                GL_FLOAT,           // type
-//                GL_FALSE,           // normalized?
-//                0,                  // stride
-//                (void *) nullptr            // array buffer offset
-//        );
-//
-//        t1.draw();
-//        t2.draw();
-//
-//        // Swap buffers
-//        glfwSwapBuffers(window);
-//        glfwPollEvents();
-//
-//    } // Check if the ESC key was pressed or the window was closed
-//    while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-//           glfwWindowShouldClose(window) == 0);
-//
-//    return programID;
-//}
-
-char  * argument;
-int main(int argc, char* argv[]) {
-    if (argc > 2 && argc < 4) {
-        argument = argv[2];
-    } else {
-        argument = (char *) "N/A";
-    }
+int main(int argc, char *argv[]) {
 
     if (!glfwInit()) {
         fprintf(stderr, "Failed to initialize GLFW\n");
@@ -214,7 +66,7 @@ int main(int argc, char* argv[]) {
     // Ensure we can capture the escape key being pressed below
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     // Hide the mouse and enable unlimited movement
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Set the mouse at the center of the screen
     glfwPollEvents();
@@ -222,7 +74,7 @@ int main(int argc, char* argv[]) {
     glfwSetCursorPos(window, width / 2, height / 2);
 
     // Dark blue background
-    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+    glClearColor(0.0f, 0.4f, 0.4f, 0.0f);
 
     // Initialize GLEW
     glewExperimental = static_cast<GLboolean>(true); // Needed for core profile
@@ -247,10 +99,10 @@ int main(int argc, char* argv[]) {
     glGenVertexArrays(1, &VertexArrayID);
     glBindVertexArray(VertexArrayID);
 
-    GLfloat s = .5;
-    GLfloat z = 0.0;
-    GLfloat H = ((sqrt(3) * s) / 2);
-    GLfloat h = ((sqrt(6) * s) / 3);
+    s = 1;
+    z = 0.0;
+    H = static_cast<GLfloat>((sqrt(3) * s) / 2);
+    h = static_cast<GLfloat>((sqrt(6) * s) / 3);
 
     //--------------------------------------------------
     // Base Triangle
@@ -335,7 +187,7 @@ int main(int argc, char* argv[]) {
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
 
     //--------------------------------------------------
-    //  Normalised Buffer
+    //  Normal Buffer
     //--------------------------------------------------
     static const GLfloat normals[] = {
             //Base Triangle
@@ -361,22 +213,21 @@ int main(int argc, char* argv[]) {
     glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(normals) * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
 
-//    GLuint programID;
-////    programID = noCamera();
-////    programID = basicCamera();
-//    programID = shadedCamera();
-////    programID = loadedObject();
+    //--------------------------------------------------
+    //  Build pyramids.
+    //--------------------------------------------------
+    t1 = new Triangle(width, height * 2, 0, 0, vertexbuffer, colourbuffer, true);
+    t2 = new Triangle(width, height * 2, width, 0, vertexbuffer, colourbuffer, true);
 
-    GLuint programID = LoadShaders(colour_g_shader, colour_v_shader, colour_f_shader);
+    GLuint programID = LoadShaders(colour_g_shader,
+                                   colour_v_shader,
+                                   colour_f_shader);
 
-    Triangle t1(width, height * 2, 0, 0, vertexbuffer, colourbuffer, true);
-    Triangle t2(width, height * 2, width, 0, vertexbuffer, colourbuffer, true);
-
-    GLuint MatrixID = glGetUniformLocation(programID, "MVP");
-    GLuint ViewID = glGetUniformLocation(programID, "V");
-    GLuint ModelID = glGetUniformLocation(programID, "M");
-    GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
-    GLuint CameraID = glGetUniformLocation(programID, "CameraPosition_worldspace");
+    auto MatrixID = static_cast<GLuint>(glGetUniformLocation(programID, "MVP"));
+    auto ViewID = static_cast<GLuint>(glGetUniformLocation(programID, "V"));
+    auto ModelID = static_cast<GLuint>(glGetUniformLocation(programID, "M"));
+    auto LightID = static_cast<GLuint>(glGetUniformLocation(programID, "LightPosition_worldspace"));
+    auto CameraID = static_cast<GLuint>(glGetUniformLocation(programID, "CameraPosition_worldspace"));
 
     do {
         // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
@@ -391,9 +242,9 @@ int main(int argc, char* argv[]) {
         //***********CAMERA*****************
         // Camera matrix
         glm::mat4 View = glm::lookAt(
-                glm::vec3(s/2, h/3, s*2), // Camera is at (0,0,-1), in World Space
-                glm::vec3(s/2, h/3, s), // and looks at the origin
-                glm::vec3(0, s, 0)  // Head is up (set to 0,-1,0 to look upside-down)
+                glm::vec3(s/2, H/3, s*3), // Camera is at (0,0,-1), in World Space
+                glm::vec3(0, 0, 0), // and looks at the origin
+                glm::vec3(0, 1, 0)  // Head is up (set to 0,-1,0 to look upside-down)
         );
         //***********MODEL*****************
         glm::mat4 Model = glm::mat4(1.0);
@@ -405,7 +256,7 @@ int main(int argc, char* argv[]) {
         glUniformMatrix4fv(ViewID, 1, GL_FALSE, &View[0][0]);
 
         // Camera view
-        glm::vec3 lightPosition(0, 1, 2);
+        glm::vec3 lightPosition(-1, -1, -1);
         glm::vec3 cameraPosition(0, 0, 0);
         glUniform3f(LightID, lightPosition.x, lightPosition.y, lightPosition.z);
         glUniform3f(CameraID, cameraPosition.x, cameraPosition.y, cameraPosition.z);
@@ -422,8 +273,8 @@ int main(int argc, char* argv[]) {
                 (void *) nullptr            // array buffer offset
         );
 
-        t1.draw();
-        t2.draw();
+        t1->draw();
+        t2->draw();
 
         // Swap buffers
         glfwSwapBuffers(window);
@@ -437,7 +288,6 @@ int main(int argc, char* argv[]) {
     glDeleteBuffers(1, &vertexbuffer);
     glDeleteProgram(programID);
     glDeleteVertexArrays(1, &VertexArrayID);
-
 
     // Close OpenGL window and terminate GLFW
     glfwTerminate();

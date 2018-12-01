@@ -48,4 +48,5 @@ clean:
 	rm -rf ./helloWorld && \
 	rm -rf ./lab2/triangle && \
 	rm -rf ./lab3/pyramid && \
-	rm -rf ./lab4/pyramid
+	rm -rf ./lab4/pyramid && \
+	rm -rf ./lab5/pyramid

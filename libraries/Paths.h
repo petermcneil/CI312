@@ -19,6 +19,10 @@ char * simple_f_shader = libraries_path(const_cast<char *>("libraries/shaders/Si
 char * light_v_shader = libraries_path(const_cast<char *>("libraries/shaders/LightVertexShader.glsl"));
 char * light_f_shader = libraries_path(const_cast<char *>("libraries/shaders/LightFragmentShader.glsl"));
 char * camera_shader = libraries_path(const_cast<char *>("libraries/shaders/CameraVertexShader.glsl"));
+char * colour_f_shader = libraries_path(const_cast<char *>("libraries/shaders/ColorsFragmentShader.glsl"));
+char * colour_v_shader = libraries_path(const_cast<char *>("libraries/shaders/ColorsVertexShader.glsl"));
+char * colour_g_shader = libraries_path(const_cast<char *>("libraries/shaders/ColorsGeometryShader.glsl"));
+
 
 // Assets
 char * sphere_asset = libraries_path(const_cast<char *>("libraries/assets/sphere.obj"));

@@ -24,8 +24,6 @@ out vec3 LightDirection_cameraspace;
 
 void main()
 {
-  
-  
   //build triangle
   fragmentColor = vertices[0].fragmentColor;
   Normal_cameraspace = vertices[0].Normal_cameraspace;
