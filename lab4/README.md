@@ -44,7 +44,7 @@ the normal will be the same across the face so is just repeated.
 After some tweaking with the shaders as detailed in the tutorial and some tidy up of code I had the finished product of
 the of pyramid lit up. Changing the position of the light source with the line `glm::vec3 lightPosition(-1, -1, -1);`.
 
-[Shaded pyramid](./shaded.png)
+![Shaded pyramid](./shaded.png)
 
 ---
 #### Final Product
@@ -55,7 +55,7 @@ make lab4
 ```
 
 Output:
-[Shaded pyramid](./shaded.png)
+![Shaded pyramid](./shaded.png)
 
 ---
 #### Conclusion
