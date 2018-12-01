@@ -38,11 +38,10 @@ void Viewer::draw() {
             (void *) 0            // array buffer offset
     );
 
-    // Draw the geometry !
     if (!fill){
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
-    glDrawArrays(GL_TRIANGLES, 0, 50); // 3 indices starting at 0 -> 1
+    glDrawArrays(GL_TRIANGLES, 0, 100000); // 3 indices starting at 0 -> 1
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
