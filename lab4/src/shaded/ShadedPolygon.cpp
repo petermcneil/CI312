@@ -181,8 +181,8 @@ GLuint lightingCamera() {
 }
 
 int main(int argc, char *argv[]) {
-    if (argc > 2 && argc < 4) {
-        argument = argv[2];
+    if (argc >= 2 && argc < 4) {
+        argument = argv[1];
     } else {
         argument = (char *) "N/A";
     }
@@ -213,7 +213,7 @@ int main(int argc, char *argv[]) {
     // Ensure we can capture the escape key being pressed below
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     // Hide the mouse and enable unlimited movement
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Set the mouse at the center of the screen
     glfwPollEvents();
@@ -221,7 +221,7 @@ int main(int argc, char *argv[]) {
     glfwSetCursorPos(window, width / 2, height / 2);
 
     // Dark blue background
-    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+    glClearColor(0.0f, 0.4f, 0.4f, 0.0f);
 
     // Initialize GLEW
     glewExperimental = static_cast<GLboolean>(true); // Needed for core profile
@@ -334,7 +334,7 @@ int main(int argc, char *argv[]) {
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
 
     //--------------------------------------------------
-    //  Normalised Buffer
+    //  Normal Buffer
     //--------------------------------------------------
     static const GLfloat normals[] = {
             //Base Triangle

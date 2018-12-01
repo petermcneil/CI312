@@ -15,10 +15,43 @@
 I started by extracting out the functions to display different types of shape/shaded/lighting.
 This was to aid readability inside the class. From here I had a good base to get started calculating the normals.
 
-To calculate the normals I used the OpenGL function `normalize`, with the cross product of the 
+Normals are used by lighting shaders and give the shaders the direction a particular point is looking at in relation to the light
+source. To calculate the normals a few calculations had to be made. A base point had to be picked on each triangle - `p0`. 
+Then two vectors were calculated for that triangle - i.e. `p1 - p0`. To have a vector that can be normalised I calculated
+the cross-product between the two vectors. This returns a vector perpendicular to the vectors, which can then be normalised.
+Resulting in the code:
 
-Following the tutorial I ended up with the function `lightingCamera()`, this function applied lighting 
-to the pyramids and gave them a shadow.
+```cpp
+    glm::vec3 t3_norm = glm::normalize(glm::cross(glm::vec3(t3_p1 - t3_p0),
+                                                  glm::vec3(t3_p2 - t3_p0)));
+```
+
+The resulting normals are then pushed into a buffer, where they are used by the lighting shaders to render lighting. Since
+the triangle is a flat surface, the normal across the whole plane is the same and is there for repeated at each of the vectors.
+
+```cpp
+    //--------------------------------------------------
+    //  Normal Buffer
+    //--------------------------------------------------
+    static const GLfloat normals[] = {
+            //Base Triangle
+            base_norm.x, base_norm.y, base_norm.z,
+            base_norm.x, base_norm.y, base_norm.z,
+            base_norm.x, base_norm.y, base_norm.z,
+            ...
+```
+
+This gave me all the buffers needed to display lighting on the triangles. After creating the function `lightingCamera()`,
+I filled it out with the code required. New shaders were needed to display the lighting information
+ - `LightFragmentShader.glsl` and `LightVertexShader.glsl`. Additionally I needed to make sure the light source was in a 
+position that could be seen from my camera.
+
+```cpp
+        glm::vec3 lightPosition(-1, -1, -1);
+```
+
+Finishing the function gave an output of:
+[Shaded pyramid](./shaded.png)
 
 ---
 #### Final Product
@@ -35,7 +68,9 @@ Output:
 
 ---
 #### Conclusion
-
+I found this tutorial useful in giving me an overview on how lighting works in OpenGL and more generally with
+graphics algorithms. I learnt how vectors and normals can be used in conjunction with shaders to produce realistic
+lighting scenes.
 
 ---
 #### Sources
