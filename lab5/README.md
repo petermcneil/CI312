@@ -50,6 +50,13 @@ However this method did not work the way I expected... changing nothing.
 
 This will need more investigation.
 
+After consulting with Karina, I was able to fix this problem. I was drawing the initial triangle over-top the other
+three. Removing this revealed the three triangles that I was trying to draw.
+
+![A pyramid that displays all three triangles](./completed.png)
+
+As can be seen there is an error with the code resulting in shadows around the centre points. I am 
+
 ---
 #### Final Product
 
@@ -59,10 +66,11 @@ make lab5
 ```
 
 Output:
+![A pyramid that displays all three triangles](./completed.png)
 
 ---
 #### Conclusion
-
+I enjoyed using GLSL shaders to draw three additional triangles in replacement for the original face.
 
 ---
 #### Sources

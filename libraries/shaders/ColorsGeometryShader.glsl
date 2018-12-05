@@ -18,88 +18,96 @@ out vec3 Normal_cameraspace;
 out vec3 Position_worldspace;
 out vec3 EyeDirection_cameraspace;
 out vec3 LightDirection_cameraspace;
-vec4 v1;
-vec4 v2;
-vec4 v3;
-
-void drawTriangle(vec4 one, vec4 two, vec4 three, vec3 colour){
-  fragmentColor = colour;
-  Normal_cameraspace = vertices[0].Normal_cameraspace;
-  Position_worldspace = vertices[0].Position_worldspace;
-  EyeDirection_cameraspace = vertices[0].EyeDirection_cameraspace;
-  LightDirection_cameraspace = vertices[0].LightDirection_cameraspace;
-  gl_Position = one;
-  EmitVertex();
-
-  fragmentColor = colour;
-  Normal_cameraspace = vertices[1].Normal_cameraspace;
-  Position_worldspace = vertices[1].Position_worldspace;
-  EyeDirection_cameraspace = vertices[1].EyeDirection_cameraspace;
-  LightDirection_cameraspace = vertices[1].LightDirection_cameraspace;
-  gl_Position = two;
-  EmitVertex();
-
-  fragmentColor = colour;
-  Normal_cameraspace = vertices[2].Normal_cameraspace;
-  Position_worldspace = vertices[2].Position_worldspace;
-  EyeDirection_cameraspace = vertices[2].EyeDirection_cameraspace;
-  LightDirection_cameraspace = vertices[2].LightDirection_cameraspace;
-  gl_Position = three;
-  EmitVertex();
-
-  EndPrimitive();
-}
 
 void main()
 {
-  //base triangle
-  fragmentColor = vertices[0].fragmentColor;
-  Normal_cameraspace = vertices[0].Normal_cameraspace;
-  Position_worldspace = vertices[0].Position_worldspace;
-  EyeDirection_cameraspace = vertices[0].EyeDirection_cameraspace;
-  LightDirection_cameraspace = vertices[0].LightDirection_cameraspace;
-  gl_Position = gl_in[0].gl_Position;
-  EmitVertex();
-  
-  fragmentColor = vertices[1].fragmentColor;
-  Normal_cameraspace = vertices[1].Normal_cameraspace;
-  Position_worldspace = vertices[1].Position_worldspace;
-  EyeDirection_cameraspace = vertices[1].EyeDirection_cameraspace;
-  LightDirection_cameraspace = vertices[1].LightDirection_cameraspace;
-  gl_Position = gl_in[1].gl_Position;
-  EmitVertex();
-  
-  fragmentColor = vertices[2].fragmentColor;
+  vec4 centre = ((gl_in[2].gl_Position + gl_in[1].gl_Position + gl_in[0].gl_Position) / 3);
+  vec3 normal = ((vertices[2].Normal_cameraspace + vertices[1].Normal_cameraspace + vertices[0].Normal_cameraspace) / 3);
+  vec3 eye = ((vertices[2].EyeDirection_cameraspace + vertices[1].EyeDirection_cameraspace + vertices[0].EyeDirection_cameraspace) / 3);
+  vec3 position = ((vertices[2].Position_worldspace + vertices[1].Position_worldspace + vertices[0].Position_worldspace) / 3);
+  vec3 light = ((vertices[2].LightDirection_cameraspace + vertices[1].LightDirection_cameraspace + vertices[0].LightDirection_cameraspace) / 3);
+  vec3 colour = vec3(1.0, 0.0, 0.0);
+
+  fragmentColor = colour;
   Normal_cameraspace = vertices[2].Normal_cameraspace;
   Position_worldspace = vertices[2].Position_worldspace;
   EyeDirection_cameraspace = vertices[2].EyeDirection_cameraspace;
   LightDirection_cameraspace = vertices[2].LightDirection_cameraspace;
   gl_Position = gl_in[2].gl_Position;
   EmitVertex();
-  
+
+  fragmentColor = colour;
+  Normal_cameraspace = vertices[0].Normal_cameraspace;
+  Position_worldspace = vertices[0].Position_worldspace;
+  EyeDirection_cameraspace = vertices[0].EyeDirection_cameraspace;
+  LightDirection_cameraspace = vertices[0].LightDirection_cameraspace;
+  gl_Position = gl_in[0].gl_Position;
+  EmitVertex();
+
+  fragmentColor = colour;
+  Normal_cameraspace = normal;
+  Position_worldspace = eye;
+  EyeDirection_cameraspace = position;
+  LightDirection_cameraspace = light;
+  gl_Position = centre;
+  EmitVertex();
+
   EndPrimitive();
 
-  vec4 centre = (gl_in[2].gl_Position + gl_in[1].gl_Position + gl_in[0].gl_Position) / 3;
+  colour = vec3(0.0, 1.0, 0.0);
 
-  //triangle 1
-  v1 = gl_in[0].gl_Position;
-  v2 = gl_in[1].gl_Position;
-  v3 = centre;
+  fragmentColor = colour;
+  Normal_cameraspace = vertices[2].Normal_cameraspace;
+  Position_worldspace = vertices[2].Position_worldspace;
+  EyeDirection_cameraspace = vertices[2].EyeDirection_cameraspace;
+  LightDirection_cameraspace = vertices[2].LightDirection_cameraspace;
+  gl_Position = gl_in[2].gl_Position;
+  EmitVertex();
 
-  drawTriangle(v1, v2, v3, vec3(1.0, 0.0, 0.0));
+  fragmentColor = colour;
+  Normal_cameraspace = vertices[1].Normal_cameraspace;
+  Position_worldspace = vertices[1].Position_worldspace;
+  EyeDirection_cameraspace = vertices[1].EyeDirection_cameraspace;
+  LightDirection_cameraspace = vertices[1].LightDirection_cameraspace;
+  gl_Position = gl_in[1].gl_Position;
+  EmitVertex();
 
-  //triangle 2
-  v1 = gl_in[0].gl_Position;
-  v2 = gl_in[2].gl_Position;
-  v3 = centre;
+  fragmentColor = colour;
+  Normal_cameraspace = normal;
+  Position_worldspace = eye;
+  EyeDirection_cameraspace = position;
+  LightDirection_cameraspace = light;
+  gl_Position = centre;
+  EmitVertex();
 
-  drawTriangle(v1, v2, v3, vec3(0.0, 0.0, 1.0));
+  EndPrimitive();
 
-  //triangle 3
-  v1 = gl_in[1].gl_Position;
-  v2 = gl_in[2].gl_Position;
-  v3 = centre;
+  colour = vec3(0.0, 0.0, 1.0);
 
-  drawTriangle(v1, v2, v3, vec3(0.0, 1.0, 0.0));
+  fragmentColor = colour;
+  Normal_cameraspace = vertices[0].Normal_cameraspace;
+  Position_worldspace = vertices[0].Position_worldspace;
+  EyeDirection_cameraspace = vertices[0].EyeDirection_cameraspace;
+  LightDirection_cameraspace = vertices[0].LightDirection_cameraspace;
+  gl_Position = gl_in[0].gl_Position;
+  EmitVertex();
+
+  fragmentColor = colour;
+  Normal_cameraspace = vertices[1].Normal_cameraspace;
+  Position_worldspace = vertices[1].Position_worldspace;
+  EyeDirection_cameraspace = vertices[1].EyeDirection_cameraspace;
+  LightDirection_cameraspace = vertices[1].LightDirection_cameraspace;
+  gl_Position = gl_in[1].gl_Position;
+  EmitVertex();
+
+  fragmentColor = colour;
+  Normal_cameraspace = normal;
+  Position_worldspace = eye;
+  EyeDirection_cameraspace = position;
+  LightDirection_cameraspace = light;
+  gl_Position = centre;
+  EmitVertex();
+
+  EndPrimitive();
 
 }
