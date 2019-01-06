@@ -174,7 +174,7 @@ add_executable(example1
 Input:
 
 ```
-make -C lab2/src/build/ && lab2/src/source/example1/example1
+make lab2
 ```
 
 Output:

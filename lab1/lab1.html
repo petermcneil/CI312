@@ -1,0 +1,110 @@
+<h3 id="lab1helloworld">Lab 1: Hello, world!</h3>
+
+<h4 id="requirements">Requirements:</h4>
+
+<p>- Write a hello world program in C++
+<br></br>
+ - Write simple funcitons for add/subtract/multiply/divide</p>
+
+<h4 id="journey">Journey</h4>
+
+<p>I had never written C++ before, so this exercise was useful for getting to understand
+the basic syntax and intricacies - and to pointers!</p>
+
+<p>I started by defining a simple main function </p>
+
+<pre><code class="cpp language-cpp">#include <iostream>
+using namespace std;
+
+int main(){
+    cout << "Hello, world!" << endl;
+    return 0;
+}
+</code></pre>
+
+<p>and compiling and running it with the command <code>c++ lab1/src/HelloWorld.cpp -o helloWorld && ./helloWorld</code></p>
+
+<p>I then started creating the functions <code>add/divide/subtract/multiply</code> and hard-coding values
+inside the <code>main()</code> function.</p>
+
+<pre><code class="cpp language-cpp">void add(int num1, int num2) {
+    cout << num1 + num2 << endl;
+}
+
+/* other functions */
+
+int main(){
+    add(1, 2)
+    ...
+    return 0;
+}
+</code></pre>
+
+<p>From here I progressed to passing in arguments from the command line. Here is where I ran into my first runtime error.
+To pass arguments into a C++ program you simply add a counter for the number of args and an array of <code>char*</code>. <code>char*</code> 
+being a pointer.</p>
+
+<p>A pointer, points to an address in memory where a variable is stored. For the case of <code>char*</code> this effectively means we 
+can simulate a Java string.</p>
+
+<pre><code class="cpp language-cpp">int main(int argc, char* argv[]) {}
+</code></pre>
+
+<p>After receiving the arguments I tried to index <code>argv</code> to extract the arguments. I tried using <code>argc</code> as the index (CI101 error)
+and didn't check <code>argc</code> properly. This led to a runtime error - <code>Segemtation fault: 11</code>. This was an out of bounds error
+meaning that the I was falling outside of the array.</p>
+
+<pre><code class="cpp language-cpp">if (argc > 0) {
+    num1 = argv[argc];
+    num2 = argv[argc -1];
+} else {
+    cout << "Need 2 arguments, not " << argc -1 << endl ;
+    return 1;
+}
+</code></pre>
+
+<p>Quite clearly the fix was check to that <code>argc &gt; 1</code>. However I also needed to fix <code>num1</code> as it causes
+the same runtime error. So I implemented a more complex if statement to only accept two arguments.</p>
+
+<pre><code class="cpp language-cpp">if (4 > argc && argc >= 3) {
+    num1 = atoi(argv[argc - 1]);
+    num2 = atoi(argv[argc - 2]);
+} else {
+    cout << "Need 2 arguments, not " <<; argc -1 << endl;
+    return 1;
+}
+</code></pre>
+
+<p>The <code>atoi()</code> function came from the <code>cstdlib</code> and converted the <code>char</code> to <code>int</code>.</p>
+
+<p>After this I decided to play around with casting and global variables. Setting global formatted <code>char[]</code> to be 
+displayed in the output. In the <code>division()</code> function I decided to compare to have two divisions performed one with
+the <code>int</code> passed in and one with the ints casted to doubles - to compare the outputs.</p>
+
+<h4 id="finalproduct">Final product</h4>
+
+<p>Input:
+<code>c++ lab1/src/HelloWorld.cpp -o helloWorld && ./helloWorld 3 4</code></p>
+
+<p>Output:</p>
+
+<pre><code class="bash language-bash">Add              |  7
+Subtract         |  1
+Multiply         |  12
+DOUBLE Divide    |  1
+INT Divide       |  1.33333
+</code></pre>
+
+<h4 id="conclusion">Conclusion</h4>
+
+<p>I feel I received a good introduction into a basic c++ and structure. I learnt how to write basic functions, how to use
+global variables, a very basic introduction in to packages, and an introduction to compiler errors from mismanaging 
+memory.</p>
+
+<p>I look forward to a deeper dive in C++ with classes, header files etc.</p>
+
+<h4 id="sources">Sources</h4>
+
+<p><a href="https://www.stackoverflow.com/">Stack Overflow</a></p>
+
+<p><a href="https://www.tutorialspoint.com/cplusplus">Tutorials Point</a></p>
