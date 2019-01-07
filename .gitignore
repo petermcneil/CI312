@@ -42,3 +42,4 @@ helloWorld
 __init__.py
 
 *.bu
+lab*/*.html
