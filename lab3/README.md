@@ -44,9 +44,17 @@ visualisation. From here I marked the midpoint of the triangle, drew 3 more line
 simulate the additional triangles.
 
 Using the formulae from the provided file I was able to generate the 3 vectors needed for 
-each of the 4 triangles. In addition I changed the hard-coded value to a variable;
+each of the 4 triangles. This became easier as I moved the hard-coded values to variables, with 
+`s` being the base length, `z` being 0, and `h`/`H` being the formulae.
 
-The resulting vectors became:
+```cpp
+    GLfloat s = .7;
+    GLfloat z = 0.0;
+    GLfloat H = ((sqrt(3) * s) / 2);
+    GLfloat h = ((sqrt(6) * s) / 3);
+```
+
+The resulting vectors became
 ```cpp
     static const GLfloat g_vertex_buffer_data[] = {
             //Base Triangle
@@ -110,24 +118,26 @@ int main(int argc, char* argv[]) {
     }
 ```
 
-If there was any argument to the compiled binary the program uses the file.
+If there was any argument to the compiled binary the program uses the file - not the most elegant solution
+but it works.
 
 ---
 #### Repo cleanup
-I noticed that for my folder structure I was having to copy all
-the common code and libraries. Therefore this lab I performed extensive refactoring of the code and 
-layout of files. I managed to extract the common libraries and shaders
+I noticed that my folder structure was messy - I had to copy all
+the common code and libraries to each new lab. Therefore in this lab I performed 
+an extensive refactor of the code and directory structure. I managed to extract the common libraries and shaders
 into a parent directory called `libraries`. This allowed me to have a
-cleaner, smaller repo and keeps it DRY (Don't Repeat Yourself).
+cleaner, smaller repo, and keeps it DRY (Don't Repeat Yourself).
 
-This required me to edit the `CMake` files to allow for a parent `libraries` project.
+This required me to edit the `CMake` files to allow for a parent `libraries` folder.
 It was easier than I had expected, the majority of what needed to be changed
-was the paths. Changing these to relative paths (i.e `../../libraries/common`) worked
+was the pathing inside each `CMakeList`. Changing these to relative paths (i.e `../../libraries/common`) worked
 well.
 
-I also extracted hardcoded paths to the shaders to a common file and using `sed`
-have provided a way to setup the project to the specific directory. In addition I
-added a `Makefile` to give the user easy building of my project, only requiring a small command `make lab1`.
+I also extracted hardcoded paths to the shaders to a common file, `Paths.h`. This gives the 
+ability to setup this project for any person by just replacing the absolute path in `Paths.h` only.
+I wrote a convience function in a `Makefile` that uses `sed` to replace the absolute path with
+the directory that the `Makefile` is in.
 
 ---
 #### Final Product

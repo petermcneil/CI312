@@ -97,8 +97,8 @@ Output:
 Add              |  7
 Subtract         |  1
 Multiply         |  12
-DOUBLE Divide    |  1
-INT Divide       |  1.33333
+INT Divide       |  1
+DOUBLE Divide    |  1.33333
 ```
 
 #### Conclusion

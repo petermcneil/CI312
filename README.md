@@ -32,14 +32,76 @@ c++ lab1/src/HelloWorld.cpp -o helloWorld
 
 **Full**
 
-See Makefile
+```bash
+@sed -i.bu  's','\/Users\/mcneip01\/uni\/CI312\/',"$$PWD\/",'g' libraries/Paths.h
+mkdir -p ./lab2/build
+cmake -B./lab2/build -H./lab2/
+make -C ./lab2/build
+./lab2/triangle
+```
 
 #### Lab 3:
 
+**Easiest**
 - `make lab3`
 
 - `make lab3File`
 
-Lab 4 - `make lab4`
+**Full**
+```bash
+@sed -i.bu  's','\/Users\/mcneip01\/uni\/CI312\/',"$$PWD\/",'g' libraries/Paths.h
+mkdir -p ./lab3/build
+cmake -B./lab3/build -H./lab3/
+make -C ./lab3/build
 
-Lab 5 - `make lab5`
+
+./lab3/pyramid
+
+OR
+
+./lab3/pyramid 1
+```
+
+#### Lab 4:
+
+**Easiest**
+
+`make lab4`
+
+**Full**
+```bash
+@sed -i.bu  's','\/Users\/mcneip01\/uni\/CI312\/',"$$PWD\/",'g' libraries/Paths.h
+mkdir -p ./lab4/build
+cmake -B./lab4/build -H./lab4/
+make -C ./lab4/build
+
+
+./lab4/pyramid
+
+OR
+
+./lab4/triangle no
+
+OR
+
+./lab4/triangle basic
+
+OR
+
+./lab4/triangle load
+```
+
+#### Lab 5:
+
+**Easiest**
+
+`make lab5`
+
+**Full**
+```bash
+@sed -i.bu  's','\/Users\/mcneip01\/uni\/CI312\/',"$$PWD\/",'g' libraries/Paths.h
+mkdir -p ./lab5/build
+cmake -B./lab5/build -H./lab5/
+make -C ./lab5/build
+./lab5/pyramid
+```

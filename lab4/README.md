@@ -16,20 +16,30 @@ clone the whole repository.
 #### Journey
 
 I started by extracting out the functions to display different types of shape/shaded/lighting.
-This was to aid readability inside the class. From here I had a good base to get started calculating the normals.
+This was to aid readability inside the `main()` function. In hindsight I should have just removed the
+other functions instead of keeping them. From here I had a good base to get started calculating the normal vectors.
 
 Normals are used by lighting shaders and give the shaders the direction a particular point is looking at in relation to the light
-source. To calculate the normals a few calculations had to be made. A base point had to be picked on each triangle - `p0`. 
-Then two vectors were calculated for that triangle - i.e. `p1 - p0`. To have a vector that can be normalised I calculated
-the cross-product between the two vectors. This returns a vector perpendicular to the vectors, which can then be normalised.
+source. To calculate the normals a few calculations had to be made. A base vertex had to be picked on each triangle - `p0`. 
+Then two vectors were calculated for that triangle based on the remaining two vertices - i.e. `p1 - p0`. It is important
+that the vertices are in the correct order otherwise the normal will be generated for the wrong direction.
+The next step in the process is to find the cross-product of the vectors, this process returns a final vector that
+is perpendicular to the previous vectors. Finally this vector is normalised.
+
 Resulting in the code:
 
 ```cpp
-    glm::vec3 t3_norm = glm::normalize(glm::cross(glm::vec3(t3_p1 - t3_p0),
-                                                  glm::vec3(t3_p2 - t3_p0)));
+    //--------------------------------------------------
+    // Base Triangle
+    //--------------------------------------------------
+    glm::vec3 base_p0(z, z, z);
+    glm::vec3 base_p1(s / 2, h, z);
+    glm::vec3 base_p2(s, z, z);
+    glm::vec3 base_norm = glm::normalize(glm::cross(glm::vec3(base_p1 - base_p0),
+                                                    glm::vec3(base_p2 - base_p0)));
 ```
 
-Following this process for the next three triangles I ended up with a normal buffer array, `normals`,
+This process was then repeated for the next three triangles I ended up with a normal buffer array, `normals`,
 ```cpp
     static const GLfloat normals[] = {
             //Base Triangle
@@ -41,11 +51,19 @@ Following this process for the next three triangles I ended up with a normal buf
 ```
 
 which were then drawn by the shaders - `LightFragmentShader` and `LightVertexShader`. The normal buffer may look
-strange, it is using the same value for each three vector points. This is due to the fact, as previously mentioned,
-the normal will be the same across the face so is just repeated.
+strange; it is using the same value for each three vector points. This is due to the fact
+the normal will be the same across the face, as the face is flat.
 
-After some tweaking with the shaders as detailed in the tutorial and some tidy up of code I had the finished product of
-the of pyramid lit up. Changing the position of the light source with the line `glm::vec3 lightPosition(-1, -1, -1);`.
+I created the `lightingCamera()` function to house the code dealing with the drawing of the pyramids
+with the new lighting shaders. Use the tutorial as the guide I was easily able to set up the `lightingCamera()` function
+to display a light source against the pyramids. As the lighting wasn't exactly correct I moved the light source
+by changing the value in the code.
+
+```cpp
+glm::vec3 lightPosition(-1, -1, -1);
+```
+
+This finally resulted in:
 
 ![Shaded pyramid](./shaded.png)
 
