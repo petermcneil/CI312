@@ -1,5 +1,8 @@
 ### Lab 1: Hello, world!
 
+[Code for this lab found](https://github.com/petermcneil/CI312/tree/master/lab1/src), however it is recommended you
+clone the whole repository.
+
 #### Requirements:
     
     - Write a hello world program in C++

@@ -1,5 +1,8 @@
 ### Lab 3: Polygon Meshes
 
+[Code for this lab found](https://github.com/petermcneil/CI312/tree/master/lab3/), however it is recommended you
+clone the whole repository.
+
 #### Task
 
 1. Understand geometry in example file

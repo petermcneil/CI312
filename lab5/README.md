@@ -1,10 +1,13 @@
 ### Lab 5: Manipulation of polygons using shaders
 
+[Code for this lab found](https://github.com/petermcneil/CI312/tree/master/lab5/), however it is recommended you
+clone the whole repository.
+
 #### Task
 
 1. Update shaders
 2. Look at shaders
-3. Subdivide triangle
+3. Use the shaders to draw 3 extra triangles per face
 
 [Source code found and adapted from Karia Rodriguez](https://github.com/karina-rodriguez/CI312-opengl)
 
@@ -42,7 +45,7 @@ This can then be used as a point to generate a 3 new triangles.
 
   drawTriangle(v1, v2, v3, vec3(0.0, 1.0, 0.0));
 ```
-`drawTriangle` is a function that takes in three vectors and a colour vector and emits the primitive.
+`drawTriangle` was a function that takes in three vectors and a colour vector and emits the primitive.
 
 However this method did not work the way I expected... changing nothing.
 
@@ -50,8 +53,9 @@ However this method did not work the way I expected... changing nothing.
 
 This will need more investigation.
 
-After consulting with Karina, I was able to fix this problem. I was drawing the initial triangle over-top the other
-three. Removing this revealed the three triangles that I was trying to draw.
+After consulting with Karina, I was able to fix this problem. The way I was calling the `drawTriangle()` function meant
+that I was drawing the same triangle (initial triangle) three times. As a fix, I had to re-imagine how to 
+calculate the Removing this revealed the three triangles that I was trying to draw.
 
 ![A pyramid that displays all three triangles](./completed.png)
 

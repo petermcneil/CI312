@@ -1,5 +1,8 @@
 ### Lab 2: OpenGL and C++ classes
 
+[Code for this lab found](https://github.com/petermcneil/CI312/tree/master/lab2/), however it is recommended you
+clone the whole repository.
+
 #### Requirements:
     
 * Modify the `example1.cpp` to display 2 triangles

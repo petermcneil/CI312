@@ -1,5 +1,8 @@
 ### Lab 4: Implementing normals
 
+[Code for this lab found](https://github.com/petermcneil/CI312/tree/master/lab4/), however it is recommended you
+clone the whole repository.
+
 #### Task
 
 1. Compute the normals of your mesh
