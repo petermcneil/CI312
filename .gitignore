@@ -43,3 +43,4 @@ __init__.py
 
 *.bu
 lab*/*.html
+lectures/
